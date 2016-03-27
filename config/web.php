@@ -17,7 +17,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'UnNm-rHeylvW0h9uSmuMYmKMeQlRYRuTq',
+            'cookieValidationKey' => 'UnNm-rHeylvW0hpumiuMYmKMeQlRYRuTq',
             'baseUrl' => $baseUrl,
 
         ],
@@ -40,11 +40,11 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-'urlManager' => [
-    'baseUrl' => $baseUrl,
-    'enablePrettyUrl' => true,
-    'showScriptName' => false,
-],
+        'urlManager' => [
+            'baseUrl' => $baseUrl,
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -63,18 +63,26 @@ $config = [
                     'basePath' => '@app/messages', // if advanced application, set @frontend/messages
                     'sourceLanguage' => 'en-US',
                     'fileMap' => [
-                        'app' => 'app.php',
-                        'menu' => 'menu.php',
+                        'main' => 'main.php',
                     ],
                 ],
             ],
         ],
 
+        'assetManager' => [
+            'appendTimestamp' => false,
+            'linkAssets' => true,
+           
+         'assetMap' => [
+               'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js1',
+          ],
+        ],
+
+
+
     ],
     'params' => $params,
 ];
-
-
 
 
 if (YII_ENV_DEV) {
@@ -89,7 +97,6 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
     ];
 }
-
 
 
 return $config;
