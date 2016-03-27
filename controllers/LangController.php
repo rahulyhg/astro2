@@ -1,48 +1,39 @@
 <?php
 
-namespace app\controllers;// в стандартной версии app\controllers;
+namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use app\components\LangRequest;
-/*подключаем наш созданный ранее файл,
-пропишите стандартный путь app\components\LangRequest;
-вместо frontend\components\LangRequest;если вы его там создавали*/
 
-class LangController extends Controller {
+use app\models\Lang;
 
-    private $lang_arr = ['eng', 'ru', 'ua'];
+class LangController extends Controller
+{
 
-    public function actionSet($lang = null) {
 
-        if (!in_array($lang, $this->lang_arr)) {
+    public function actionSet($lang = 'eng')
+    {
+
+
+        if (!array_key_exists($lang, Yii::$app->params['supportLang'])) {
             throw new NotFoundHttpException;
         }
 
         if (isset(Yii::$app->request->cookies['lang'])) {
-//если язык уже установлен
             Yii::$app->response->cookies->remove('lang');
-//удаляем cookie языка
-            Yii::$app->response->cookies->add(new \yii\web\Cookie([
-                'name' => 'lang',
-                'value' => $lang
-            ]));//устанавливаем cookie для языка
-            $lang = LangRequest::getCode($lang);//получаем код
-
-            Yii::$app->language = $lang;//устанавливаем язык фреймворку
-            Yii::$app->formatter->locale = $lang;//устанавливаем локаль
-        } else {//если язык не был установлен(а вдруг)
-            Yii::$app->response->cookies->add(new \yii\web\Cookie([
-                'name' => 'lang',
-                'value' => $lang
-            ]));
-            $lang = LangRequest::getCode($lang);
-            Yii::$app->language = $lang;
-            Yii::$app->formatter->locale = $lang;
         }
+
+        Yii::$app->response->cookies->add(new \yii\web\Cookie([
+            'name' => 'lang',
+            'value' => $lang
+        ]));
+
+        Yii::$app->language = Yii::$app->params['supportLang'][$lang];
+        Yii::$app->formatter->locale = Yii::$app->params['supportLang'][$lang];
+
         return $this->redirect(Yii::$app->request->referrer);
-//возвращаем пользователя откуда пришел
+
     }
 
 }

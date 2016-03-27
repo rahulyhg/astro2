@@ -7,15 +7,22 @@ $baseUrl = str_replace('/public_html', '', (new \yii\web\Request)->getBaseUrl())
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'app\components\LanguageSelector'
+        ],
+    ],
+    'language' => 'en-US',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'UnNm-rHeylvW0h9uSmuMYmKMeQlRYRuTq',
             'baseUrl' => $baseUrl,
-           'class' => 'app\components\LangRequest',
+
         ],
+
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -57,7 +64,7 @@ $config = [
                     'sourceLanguage' => 'en-US',
                     'fileMap' => [
                         'app' => 'app.php',
-                        //'main' => 'main.php',
+                        'menu' => 'menu.php',
                     ],
                 ],
             ],
@@ -66,6 +73,9 @@ $config = [
     ],
     'params' => $params,
 ];
+
+
+
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
@@ -79,5 +89,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
     ];
 }
+
+
 
 return $config;

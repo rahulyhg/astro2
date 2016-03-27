@@ -142,7 +142,7 @@ AppAsset::register($this);
                                     <span class="glyphicon glyphicon-home" aria-hidden="true"
                                           title="Домой"></span></a></li>
                             <li class="sub-menu c2"><a href="javascript:void(0);"
-                                                       title="">Гороскопы</a><!-- Mega Menu -->
+                                                       title=""><?= \Yii::t('menu', 'Horoscopes');?></a><!-- Mega Menu -->
                                 <ul class="mega_menu left">
                                     <li class="col" style="width: 55%"><h5>Профессиональные</h5>
                                         <ol>
@@ -208,26 +208,33 @@ AppAsset::register($this);
                             <li class="last  c6"><a href="/contacts/"
                                                     title="">Контакты</a>
                             </li>
+
                             <li class="sub-menu c7" style="float: right"><a href="javascript:void(0);" title="">
                                     <img width="25" height="25" alt="ru"
-                                         src="/img/ru-flag.png"/><b
+                                         src="/img/<?=Yii::$app->params['lang'];?>-flag.png"/><b
                                         class="caret"></b> </a>
 
                                 <ul>
-                                    <li><a href="/language/en"><img width="25"
-                                                                                height="25"
-                                                                                alt="en"
-                                                                                src="/img/en-flag.png"></a>
-                                    </li>
-                                    <li><a href="/language/fr"><img width="25"
-                                                                                height="25"
-                                                                                alt="fr"
-                                                                                src="/img/fr-flag.png"></a>
-                                    </li>
+                                    <? foreach(Yii::$app->params['supportLang'] as $key=>$val) {
+                                        if($key!=Yii::$app->params['lang']){
+                                         print
+                                         "<li><a href=\"/lang/set?lang=".$key."\"><img width=\"25\"
+                                                                                height=\"25\"
+                                                                                alt=\"".$key."\"
+                                                                                src=\"/img/".$key."-flag.png\"></a>
+                                    </li>";
+                                        }
+                                    }
+                                    ?>
+
                                 </ul>
                             </li>
 
+
+
                         </ul>
+
+
                     </div>
                 </div>
                 <!-- //MENU -->            </header>
@@ -291,6 +298,8 @@ AppAsset::register($this);
 
 
             <p>
+
+
 
                 Наш «Звездный сайт» ждал Вас, уважаемый посетитель. Раз Вы пришли к нам, значит, у Вас возникла та или иная причина посоветоваться со звездами, узнать, что они предскажут Вам.
                 <br>Представляемый Вам сайт посвящен исключительно астрологии и содержит гороскопы, книги и различные статьи по астрологии.
